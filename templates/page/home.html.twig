@@ -33,6 +33,6 @@
         <p>Ilość odsłon: {{ user.pageViews }}</p>
         <p>Page rating: {{ user.rating }}</p>
 
-        <small>Dzisiaj jest {{ user['date']|date("Y-m-d H:i:s") }}</small>
+        <small>Czas wczytania strony: {{ user.date|date("Y-m-d H:i:s") }}</small>
     </div>
 {% endblock %}
