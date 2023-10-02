@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page - home{% endblock %}
+
+{% block body %}
+    <div class="content-page-home">
+        <h1>{{ user.title }}</h1>
+        <h2>
+            {{ user.user.name }} ({{ user.user.email }})
+            <p>
+                Konto 
+                {% if user.isPremiumUser %}
+                    {{ 'Premium'|upper }}
+                {% else %}
+                    {{ 'Standard'|upper }}
+                {% endif %}
+            </p>
+        </h2>
+        <p>Tags: {{ user.popularTags|join(',') }}</p>
+
+        <div class="page-home-messages">
+            <h3>Wiadomości:</h3>
+            <ul>
+                {% for message in user.messages %}
+                    <li>{{ message.id }}. {{ message.text }} (autor: {{ message.author }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <p>Temperatura: {{ user.weather.temperature }}<sup>o</sup>, {{ user.weather.condition }}</p>
+
+        <h3>Szczęśliwe liczby: {{ user.numbers|join(',') }}</h3>
+        <p>Ilość odsłon: {{ user.pageViews }}</p>
+        <p>Page rating: {{ user.rating }}</p>
+
+        <small>Dzisiaj jest {{ user['date']|date("Y-m-d H:i:s") }}</small>
+    </div>
+{% endblock %}
