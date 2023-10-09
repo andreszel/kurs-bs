@@ -5,12 +5,16 @@
 {% block body %}
     <h1>{{ 'Top random game'|upper }}</h1>
 
-    <h3>Random games are:</h3>
-    <div class="games">
-        <ul>
-            {% for game in games %}
-                <li>{{ loop.index }}. {{ game }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if games %}
+        <h3>Random games are:</h3>
+        <div class="games">
+            <ul>
+                {% for game in games %}
+                    <li>{{ loop.index }}. {{ game }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        {{ include('no_result.html.twig') }}
+    {% endif %}
 {% endblock %}

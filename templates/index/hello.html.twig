@@ -5,12 +5,16 @@
 {% block body %}
     <h1>Hello {{ firstName|capitalize }}</h1>
 
-    <h2>Favorite game!</h2>
-    <div class="games">
-        <ul>
-            {% for game in favoriteGames %}
-                <li>{{ game }}</li> 
-            {% endfor %}
-        </ul>
-    </div>
+    {% if favoriteGames %}
+        <h2>Favorite game!</h2>
+        <div class="games">
+            <ul>
+                {% for game in favoriteGames %}
+                    <li>{{ game }}</li> 
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        {{ include('no_result.html.twig') }}
+    {% endif %}
 {% endblock %}

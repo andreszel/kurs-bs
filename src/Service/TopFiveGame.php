@@ -22,11 +22,30 @@ class TopFiveGame
 
     public function random(int $num = 5): array
     {
-        $keys = array_rand($this->games, $num);
-        $newGames = [];
-        foreach($keys as $key) {
-            $newGames[] = $this->games[$key];
+        if(!$num > 0) return [];
+
+        $maxNum = count($this->games);
+
+        if(!$maxNum > 0) return [];
+
+        if($num > $maxNum) {
+            $num = $maxNum;
         }
+
+        $keys = array_rand($this->games, $num);
+
+        $newGames = [];
+        if(is_array($keys)) {
+            foreach($keys as $key) {
+                $newGames[] = $this->games[$key];
+            }
+        }else{
+            if(is_int($keys) && $keys >= 0) {
+                $newGames[] = $this->games[$keys];
+            }
+        }
+
+        shuffle($newGames);
 
         return $newGames;
     }

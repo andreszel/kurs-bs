@@ -97,3 +97,7 @@ footer {
     text-align: center;
     font-size: 1.2rem;
 }
+.center-content {
+    width: 100%;
+    text-align: center;
+}
