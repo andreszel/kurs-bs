@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Generate code{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Generate code'|first }}</h1>
+
+    Download code, click <a href="{{ asset('codes/'~code~'.txt') }}" target="_blank">here</a>.
+{% endblock %}

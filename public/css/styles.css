@@ -63,12 +63,12 @@ main p {
     margin-bottom: 20px;
 }
 
-#games ul {
+.games ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-#games ul li {
+.games ul li {
     padding: 10px;
     margin: 5px;
     background-color: #ffffff;
