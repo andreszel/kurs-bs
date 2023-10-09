@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Top random games{% endblock %}
+{% block title %}The best games{% endblock %}
 
 {% block body %}
     <h1>{{ 'Top random game'|upper }}</h1>
 
     {% if games %}
-        <h3>Random games are:</h3>
+        <h3>The best games:</h3>
         <div class="games">
             <ul>
                 {% for game in games %}
