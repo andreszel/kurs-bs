@@ -3,10 +3,9 @@
 {% block title %}The best games{% endblock %}
 
 {% block body %}
-    <h1>{{ 'Top random game'|upper }}</h1>
+    <h1>{{ 'The best games:'|upper }}</h1>
 
     {% if games %}
-        <h3>The best games:</h3>
         <div class="games">
             <ul>
                 {% for game in games %}
