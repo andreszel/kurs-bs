@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("/home", name="page.home")
      */
     public function home(): Response
     {
