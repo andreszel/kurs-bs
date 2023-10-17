@@ -29,7 +29,7 @@
         
         <p>Temperatura: {{ user.weather.temperature }}<sup>o</sup>, {{ user.weather.condition }}</p>
 
-        <h3>Szczęśliwe liczby: {{ user.numbers|join(',') }}</h3>
+        <h3>Szczęśliwe liczby: {{ user.numbers|join(', ') }}</h3>
         <p>Ilość odsłon: {{ user.pageViews }}</p>
         <p>Page rating: {{ user.rating }}</p>
 
