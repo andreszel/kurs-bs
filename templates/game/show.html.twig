@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ game.name }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>Release date: {{ game.releaseDate|date('d-m-Y') }}</p>
+                <p>Category: {{ game.category.name ?? '' }}</p>
+                <p>Score: <b>{{ game.score }}/10</b></p>
+                <h2>Description</h2>
+                <p>{{ game.description }}</p>
+                <a href="{{ path('app_game_edit', {'id': game.id}) }}">edit</a>
+            </div>
+        </div>
+    </div>    
+{% endblock %}

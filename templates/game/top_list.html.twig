@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Top games</h1>
+
+    <div class="games">
+        <ul>
+            {% for game in games %}
+                <li>{{ game.name }} - (score: {{ game.score }}) - <a href="{{ path('app_game_show', {'id': game.id}) }}">details</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
