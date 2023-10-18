@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category Post!{% endblock %}
+
+{% block body %}
+    <h1>Post Categories</h1>
+    <a href="{{ path('app_category_post_create') }}" class="btn btn-sm btn-primary">Utwórz nową</a>
+    <div class="categories-post">
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                    <li>{{ category.name }} - <a href="{{ path('app_category_post_show', {'id': category.id}) }}">details</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>Lista jest pusta!</h3>
+        {% endif %}
+    </div>
+{% endblock %}

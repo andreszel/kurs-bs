@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+    <h1>Show post</h1>
+
+    <div class="post">
+        <h2 class="mb-3">{{ post.title }}</h2>
+        <p>{{ post.description }}</p>
+        <p>Created date: <strong>{{ post.createdAt|date('Y-m-d H:i:s') }}</strong></p>
+    </div>
+    <div class="comments">
+        <h2 class="header-comments">Comments:</h2>
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="comment">
+                    <p class="comment-description">{{ comment.description }}</p>
+                    <div class="comment-author-date">
+                        <p class="comment-author">Author: {{ comment.author }}</p>
+                        <p class="created-at">Created at: {{ comment.createdAt|date("Y-m-d H:i:s") }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h3>Lista jest pusta</h3>
+        {% endif %}
+    </div>
+
+    <a href="{{ path('app_comment_create', {'postId': post.id}) }}" class="btn btn-sm btn-success mt-3">Create comment</a>
+
+    <a href="{{ path('app_post') }}" class="btn btn-sm btn-primary mt-3">Powrót do listy</a>
+{% endblock %}

@@ -63,14 +63,14 @@ main p {
     margin-bottom: 20px;
 }
 
-.games ul {
+.games ul, .categories-post ul, .posts ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-.games ul li {
+.games ul li, .categories-post ul li, .posts ul li {
     padding: 10px;
-    margin: 5px;
+    margin: 5px 0;
     background-color: #ffffff;
     border: 1px solid #cccccc;
     border-radius: 5px;
@@ -100,4 +100,96 @@ footer {
 .center-content {
     width: 100%;
     text-align: center;
+}
+.mb-3 {
+    margin-bottom: 15px;
+}
+.mt-3 {
+    margin-top: 15px;
+}
+.post {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-decoration: none;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+button, select {
+    text-transform: none;
+}
+.category-post {
+    padding: 10px 0;
+}
+.comments, .comment {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.header-comments {
+    border-bottom: 1px dashed #000;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.comment {
+    border-bottom: 1px dashed #000;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+.comment p {
+    margin-bottom: 0;
+}
+.comment-description {
+    text-align: justify;
+}
+.comment-author-date {
+    display: flex;
+    justify-content: space-between;
+}
+.comment-author {
+    font-size: small;
+    font-weight: 400;
+}
+.created-at {
+    font-style: italic;
+    font-size: small;
 }
