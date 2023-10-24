@@ -39,6 +39,16 @@ class GameRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAll(string $columnName = 'id', string $orderBy = 'ASC'): array
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->orderBy('g.'.$columnName, $orderBy);
+        
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
     public function findAllEqualThanScore(int $score = 10): array
     {
         $conn = $this->getEntityManager()->getConnection();

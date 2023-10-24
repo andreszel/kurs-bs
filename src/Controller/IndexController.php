@@ -17,6 +17,9 @@ class IndexController extends AbstractController
         $templates_dir = $this->getParameter('templates_dir');
         dump($templates_dir);
 
+        $this->addFlash('success', 'alert success');
+        $this->addFlash('info', 'alert info');
+
         return $this->render('index/home.html.twig');
     }
 

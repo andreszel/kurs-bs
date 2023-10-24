@@ -2,11 +2,18 @@
 
 {% block body %}
     <h1>Games</h1>
+    <a href="{{ path('app_game_new') }}" class="btn btn-sm btn-primary">+ Nowa gra</a>
 
     <div class="games">
         <ul>
             {% for game in games %}
-                <li>{{ game.name }} - <a href="{{ path('app_game_show', {'id': game.id}) }}">details</a></li>
+                <li class="d-flex justify-content-between">
+                    <div>{{ loop.index }}. {{ game.name }}</div>
+                    <div>
+                        <a href="{{ path('app_game_show', {'id': game.id}) }}" class="btn btn-sm btn-primary">details</a>
+                        <a href="{{ path('app_game_edit', {'id': game.id}) }}" class="btn btn-sm btn-info">edit</a>
+                    </div>
+                </li>
             {% endfor %}
         </ul>
     </div>
