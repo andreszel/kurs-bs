@@ -5,29 +5,36 @@
 {% block body %}
     <h1>Show post</h1>
 
-    <div class="post">
+    <div class="post mb-3 shadow p-3 mb-5 bg-body rounded">
         <h2 class="mb-3">{{ post.title }}</h2>
         <p>{{ post.description }}</p>
         <p>Created date: <strong>{{ post.createdAt|date('Y-m-d H:i:s') }}</strong></p>
     </div>
-    <div class="comments">
-        <h2 class="header-comments">Comments:</h2>
-        {% if comments %}
+    <div class="">
+        <div class="comments">
+            <h2 class="header-comments">Comments:</h2>
             {% for comment in comments %}
-                <div class="comment">
+                <div class="comment d-flex flex-column shadow p-3 mb-5 bg-body rounded">
                     <p class="comment-description">{{ comment.description }}</p>
-                    <div class="comment-author-date">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ path('app_post_comment_edit', {'id': comment.id}) }}" class="btn btn-sm btn-primary me-1">edit</a>
+                        <a href="{{ path('app_post_comment_delete', {'id': comment.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">delete</a>
+                    </div>
+                    <div class="comment-author-date mb-1">
                         <p class="comment-author">Author: {{ comment.author }}</p>
                         <p class="created-at">Created at: {{ comment.createdAt|date("Y-m-d H:i:s") }}</p>
                     </div>
                 </div>
+            {% else %}
+                <p class="lead">Lista jest pusta</p>
             {% endfor %}
-        {% else %}
-            <h3>Lista jest pusta</h3>
-        {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-start mt-3">
+            <a href="{{ path('app_post_comment_new', {'postId': post.id}) }}" class="btn btn-sm btn-success me-1">Add comment</a>
+            <a href="{{ path('app_post_comment_create_random', {'postId': post.id}) }}" class="btn btn-sm btn-secondary me-1" title="Add comment with random description and author">Create random comment</a>
+            <a href="{{ path('app_post') }}" class="btn btn-sm btn-primary me-1">Powrót do listy</a>
+            <a href="{{ path('app_post_delete', {'id': post.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">delete</a>
+        </div>
     </div>
-
-    <a href="{{ path('app_comment_create', {'postId': post.id}) }}" class="btn btn-sm btn-success mt-3">Create comment</a>
-
-    <a href="{{ path('app_post') }}" class="btn btn-sm btn-primary mt-3">Powrót do listy</a>
 {% endblock %}

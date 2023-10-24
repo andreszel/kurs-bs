@@ -3,21 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\CategoryPost;
+use App\Form\CategoryPostType;
+use App\Repository\CategoryPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class CategoryPostController extends AbstractController
 {
     #[Route('/category-post', name: 'app_category_post')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(CategoryPostRepository $categoryPostRepository): Response
     {
-        $categories = $entityManager->getRepository(CategoryPost::class)->findAll();
-
         return $this->render('category_post/index.html.twig', [
-            'categories' => $categories,
+            'categories' => $categoryPostRepository->findAll(),
         ]);
     }
 
@@ -29,19 +29,62 @@ class CategoryPostController extends AbstractController
         ]);
     }
 
-    #[Route('/category-post/create', name: 'app_category_post_create')]
-    public function create(EntityManagerInterface $entityManager): Response
+    #[Route('/category-post/new', name: 'app_category_post_new')]
+    public function create(Request $request, CategoryPostRepository $categoryPostRepository): Response
     {
-        $name = 'Category ' . rand(1,1240);
-        $slugger = new AsciiSlugger();
-        $slug = $slugger->slug($name)->lower();
+        $form = $this->createForm(CategoryPostType::class);
+        $form->handleRequest($request);
 
-        $categoryPost = new CategoryPost();
-        $categoryPost->setName($name);
-        $categoryPost->setSlug($slug);
+        if($form->isSubmitted() && $form->isValid()) {
+            $categoryPost = $form->getData();
 
-        $entityManager->persist($categoryPost);
-        $entityManager->flush();
+            $categoryPostRepository->save($categoryPost, true);
+
+            $this->addFlash('success', 'Successful create');
+
+            return $this->redirectToRoute('app_category_post');
+        }
+
+        return $this->render('category_post\new.html.twig',[
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/category-post/edit/{slug}', name: 'app_category_post_edit')]
+    public function edit(Request $request, CategoryPostRepository $categoryPostRepository, string $slug): Response
+    {
+        $categoryPost = $categoryPostRepository->findOneBy(['slug' => $slug]);
+
+        if(!$categoryPost) {
+            throw $this->createNotFoundException('Soory. Not found category!');
+        }
+
+        $form = $this->createForm(CategoryPostType::class, $categoryPost);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $categoryPost = $form->getData();
+
+            $categoryPostRepository->save($categoryPost, true);
+
+            $this->addFlash('success', 'Successful update');
+
+            return $this->redirectToRoute('app_category_post');
+        }
+
+        return $this->render('category_post/edit.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/category-post/delete/{slug}', methods: ['GET', 'DELETE'], name: 'app_category_post_delete')]
+    public function delete(Request $request, CategoryPostRepository $categoryPostRepository, string $slug): Response
+    {
+        $categoryPost = $categoryPostRepository->findOneBy(['slug' => $slug]);
+
+        $categoryPostRepository->remove($categoryPost, true);
+
+        $this->addFlash('success', 'Successfull delete category!');
 
         return $this->redirectToRoute('app_category_post');
     }

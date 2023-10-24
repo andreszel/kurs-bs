@@ -3,13 +3,20 @@
 {% block title %}Category Post!{% endblock %}
 
 {% block body %}
-    <h1>Post Categories</h1>
-    <a href="{{ path('app_category_post_create') }}" class="btn btn-sm btn-primary">Utwórz nową</a>
+    <h1>Post Categories - list</h1>
+    <a href="{{ path('app_category_post_new') }}" class="btn btn-sm btn-primary">Create category post</a>
     <div class="categories-post">
         {% if categories %}
             <ul>
                 {% for category in categories %}
-                    <li>{{ category.name }} - <a href="{{ path('app_category_post_show', {'id': category.id}) }}">details</a></li>
+                    <li class="d-flex justify-content-between">
+                        <span>{{ category.name }} - {{ category.slug }} (posts: {{ category.posts|length }})</span>
+                        <div>
+                            <a href="{{ path('app_category_post_show', {'id': category.id}) }}" class="btn btn-sm btn-success">details</a>
+                            <a href="{{ path('app_category_post_edit', {'slug': category.slug}) }}" class="btn btn-sm btn-primary">edit</a>
+                            <a href="{{ path('app_category_post_delete', {'slug': category.slug}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">delete</a>
+                        </div>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}

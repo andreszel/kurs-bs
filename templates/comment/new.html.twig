@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Form add new comment{% endblock %}
+
+{% block body %}
+    <h3>Form Comment - new</h3>
+    <h5>Post: {{ post.title }}</h5>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

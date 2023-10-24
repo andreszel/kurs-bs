@@ -42,6 +42,24 @@ class CategoryPostRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function save(CategoryPost $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(CategoryPost $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
 //    /**
 //     * @return CategoryPost[] Returns an array of CategoryPost objects
 //     */

@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\CategoryPost;
 use App\Entity\Post;
+use App\Form\PostType;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\AsciiSlugger;
@@ -20,6 +23,79 @@ class PostController extends AbstractController
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
         ]);
+    }
+
+    #[Route('/post/new', name: 'app_post_new')]
+    public function new(Request $request, PostRepository $postRepository): Response
+    {
+        $form = $this->createForm(PostType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $post = $form->getData();
+
+            $postRepository->save($post, true);
+
+            $this->addFlash('success', 'Successfull create post!');
+
+            return $this->redirectToRoute('app_post');
+        }
+
+        return $this->render('post/new.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/post/edit/{id}', name: 'app_post_edit')]
+    public function edit(Request $request, PostRepository $postRepository, int $id): Response
+    {
+        $post = $postRepository->find($id);
+
+        if(!$post) {
+            throw $this->createNotFoundException('not_exist');
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $post = $form->getData();
+
+            $postRepository->save($post, true);
+
+            $this->addFlash('success', 'Successfull update post!');
+
+            return $this->redirectToRoute('app_post');
+        }
+
+        return $this->render('post/edit.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/post/show/{id}', name: 'app_post_show')]
+    public function show(Post $post): Response
+    {
+        $comments = $post->getComments();
+
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+            'comments' => $comments
+        ]);
+    }
+
+    #[Route('/post/delete/{id}', methods: ['GET', 'DELETE'], name: 'app_post_delete')]
+    public function delete(Request $request, PostRepository $postRepository, int $id): Response
+    {
+        $post = $postRepository->find($id);
+
+        $postRepository->remove($post, true);
+
+        $this->addFlash('success', 'Successfull delete post!');
+
+        return $this->redirectToRoute('app_post');
     }
 
     #[Route('/post/create-random', name: 'app_post_create')]
@@ -40,16 +116,5 @@ class PostController extends AbstractController
         $entityManager->getRepository(Post::class)->save($post, true);
 
         return $this->redirectToRoute('app_post');
-    }
-
-    #[Route('/post/show/{slug}', name: 'app_post_show')]
-    public function show(Post $post): Response
-    {
-        $comments = $post->getComments();
-
-        return $this->render('post/show.html.twig', [
-            'post' => $post,
-            'comments' => $comments
-        ]);
     }
 }

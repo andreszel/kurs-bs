@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -18,9 +20,11 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -36,7 +40,7 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private ?CategoryPost $categoryPost = null;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
     public function __construct()
@@ -122,13 +126,18 @@ class Post
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
+    public function prePersist(): void
     {
         $this->setCreatedAt(new \DateTime('now'));
+
+        $slugger = new AsciiSlugger();
+        $slug = $slugger->slug($this->title)->lower();
+
+        $this->setSlug($slug);
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
+    public function preUpdate(): void
     {
         $this->setUpdatedAt(new \DateTime('now'));
     }

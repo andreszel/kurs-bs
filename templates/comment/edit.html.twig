@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Form edit comment{% endblock %}
+
+{% block body %}
+    <h3>Form Comment - edit</h3>
+    <p class="font-italic text-muted"><small>Post: {{ post.title }}</small></p>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

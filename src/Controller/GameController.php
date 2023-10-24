@@ -58,13 +58,9 @@ class GameController extends AbstractController
             );
         }
 
-        $form = $this->createForm(
-            GameType::class,
-            $game,
-            [
-                'method' => 'POST'
-            ]
-        );
+        $form = $this->createForm(GameType::class, $game, [
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {

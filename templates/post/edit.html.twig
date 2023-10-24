@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formularz edycji posta{% endblock %}
+
+{% block body %}
+    <h3>Form Post - edit</h3>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
