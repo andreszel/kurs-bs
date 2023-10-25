@@ -4,7 +4,5 @@
 
 {% block body %}
     <h3>Form Post Category - new</h3>
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {{ include('category_post/_form.html.twig') }}
 {% endblock %}

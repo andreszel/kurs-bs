@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Posts</h1>
     <a href="{{ path('app_post_new') }}" class="btn btn-sm btn-primary">Create post</a>
+    <a href="{{ path('app_category_post') }}" class="btn btn-sm btn-success">Post Categories</a>
     <div class="posts">
         {% if posts %}
             <ul>

@@ -12,7 +12,8 @@
                 <p>Score: <b>{{ game.score }}/10</b></p>
                 <h2>Description</h2>
                 <p>{{ game.description }}</p>
-                <a href="{{ path('app_game_edit', {'id': game.id}) }}">edit</a>
+                <a href="{{ path('app_game_edit', {'id': game.id}) }}" class="btn btn-sm btn-info">edit</a>
+                <a href="{{ path('app_game') }}" class="btn btn-sm btn-success">Games</a>
             </div>
         </div>
     </div>    

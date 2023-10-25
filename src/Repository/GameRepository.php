@@ -77,6 +77,17 @@ class GameRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    public function findRandomGame(int $limit = 5): array
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->select('g')
+            ->orderBy('RAND()')
+            ->getQuery()
+            ->setMaxResults($limit);
+
+        return $qb->execute();
+    }
+
 //    /**
 //     * @return Game[] Returns an array of Game objects
 //     */

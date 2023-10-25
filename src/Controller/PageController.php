@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     /**
-     * @Route("/home", name="page.home")
+     * @Route("/home", name="page.index")
      */
-    public function home(): Response
+    public function index(): Response
     {
         $user = [
             'title' => 'Strona główna',
@@ -29,7 +29,7 @@ class PageController extends AbstractController
             'rating' => 4.5
         ];
 
-        return $this->render('page/home.html.twig', [
+        return $this->render('page/index.html.twig', [
             'user' => $user
         ]);
     }

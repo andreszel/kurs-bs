@@ -1,10 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Top games</h1>
+    <h1>Random games</h1>
     <a href="{{ path('app_game_new') }}" class="btn btn-sm btn-primary">+ Nowa gra</a>
     <a href="{{ path('app_category') }}" class="btn btn-sm btn-success">Game categories</a>
 
+    <a href="{{ path('app_random_games') }}" class="btn btn-sm btn-info">Default random</a>
+    <a href="{{ path('app_random_games', {'limit': 6}) }}" class="btn btn-sm btn-info">6 Random</a>
+    <a href="{{ path('app_random_games', {'limit': 7}) }}" class="btn btn-sm btn-info">7 Random</a>
+    <a href="{{ path('app_random_games', {'limit': 8}) }}" class="btn btn-sm btn-info">8 Random</a>
+    <a href="{{ path('app_random_games', {'limit': 9}) }}" class="btn btn-sm btn-info">9 Random</a>
+    <a href="{{ path('app_random_games', {'limit': 10}) }}" class="btn btn-sm btn-info">10 Random</a>
+    
     <div class="games">
         <ul>
             {% for game in games %}

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\CodeGenerator;
-use App\Service\TopFiveGame;
+use App\Service\RandomGame;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +17,8 @@ class IndexController extends AbstractController
         $templates_dir = $this->getParameter('templates_dir');
         dump($templates_dir);
 
-        $this->addFlash('success', 'alert success');
-        $this->addFlash('info', 'alert info');
+        /* $this->addFlash('success', 'alert success');
+        $this->addFlash('info', 'alert info'); */
 
         return $this->render('index/home.html.twig');
     }
@@ -68,9 +68,9 @@ class IndexController extends AbstractController
     }
 
     #[Route('/top-random/{num}', name: 'index.top_random')]
-    public function topRandom(TopFiveGame $topFiveGame, int $num = 5)
+    public function topRandom(RandomGame $randomGame, int $num = 5)
     {
-        $games = $topFiveGame->random($num);
+        $games = $randomGame->random($num);
 
         return $this->render('index/top_random.html.twig', [
             'games' => $games

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game categories!{% endblock %}
+
+{% block body %}
+    <h1>Game Categories - list</h1>
+    <a href="{{ path('app_category_new') }}" class="btn btn-sm btn-primary">Create new game category</a>
+    <a href="{{ path('app_game') }}" class="btn btn-sm btn-success">Games</a>
+    <div class="categories-post">
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                    <li class="d-flex justify-content-between">
+                        <span>{{ category.name }}</span>
+                        <div>
+                            <a href="{{ path('app_category_show', {'id': category.id}) }}" class="btn btn-sm btn-success">details</a>
+                            <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-sm btn-primary">edit</a>
+                            <a href="{{ path('app_category_delete', {'id': category.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">delete</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>Lista jest pusta!</h3>
+        {% endif %}
+    </div>
+{% endblock %}

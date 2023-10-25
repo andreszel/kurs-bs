@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class TopFiveGame
+class RandomGame
 {
     private array $games;
     public function __construct() {
@@ -24,7 +24,8 @@ class TopFiveGame
     {
         if(!$num > 0) return [];
 
-        $maxNum = count($this->games);
+        //$maxNum = count($this->games);
+        $maxNum = 8;
 
         if(!$maxNum > 0) return [];
 

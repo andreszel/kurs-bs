@@ -7,9 +7,6 @@ use App\Form\GameType;
 use App\Repository\GameRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,16 +16,22 @@ class GameController extends AbstractController
     public function __construct(private EntityManagerInterface $entityManager) {
     }
 
-    #[Route('/game/new', name: 'app_game_new')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/games', name: 'app_game')]
+    public function index(GameRepository $gameRepository): Response
     {
-        $form = $this->createForm(
-            GameType::class,
-            null,
-            [
-                'method' => 'GET'
-            ]
-        );
+        $games = $gameRepository->findAll('id', 'DESC');
+
+        return $this->render('game/index.html.twig', [
+            'games' => $games
+        ]);
+    }
+
+    #[Route('/game/new', name: 'app_game_new')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(GameType::class, null, [
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -37,12 +40,12 @@ class GameController extends AbstractController
             $entityManager->persist($game);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Gra została dodana!');
+            $this->addFlash('success', 'Successfull added!');
 
             return $this->redirectToRoute('app_game_show', ['id' => $game->getId()]);
         }
 
-        return $this->render('game/index.html.twig', [
+        return $this->render('game/new.html.twig', [
             'form' => $form
         ]);
     }
@@ -68,7 +71,7 @@ class GameController extends AbstractController
 
             $gameRepository->save($game, true);
 
-            $this->addFlash('success', 'Gra została zaktualizowana!');
+            $this->addFlash('success', 'Successfull update!');
 
             return $this->redirectToRoute('app_game_show', ['id' => $game->getId()]);
         }
@@ -86,14 +89,22 @@ class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/games', name: 'app_game_list')]
-    public function list(GameRepository $gameRepository): Response
+    #[Route('/game/delete/{id}', name: 'app_game_delete')]
+    public function delete(GameRepository $gameRepository, int $id): Response
     {
-        $games = $gameRepository->findAll('id', 'DESC');
+        $game = $gameRepository->find($id);
 
-        return $this->render('game/list.html.twig', [
-            'games' => $games
-        ]);
+        if(!$game) {
+            throw $this->createNotFoundException(
+                'No game found id: '. $id
+            );
+        }
+
+        $gameRepository->remove($game, true);
+
+        $this->addFlash('success', 'Successful delete!');
+
+        return $this->redirectToRoute('app_game');
     }
 
     #[Route('/games/top', name: 'app_game_top_list')]
@@ -108,19 +119,13 @@ class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/game/delete/{id}', name: 'app_game_delete')]
-    public function delete(GameRepository $gameRepository, int $id): Response
+    #[Route('/random-games/{limit}', name: 'app_random_games')]
+    public function randomGames(GameRepository $gameRepository, int $limit = 5): Response
     {
-        $game = $gameRepository->find($id);
+        $games = $gameRepository->findRandomGame($limit);
 
-        if(!$game) {
-            throw $this->createNotFoundException(
-                'No game found id: '. $id
-            );
-        }
-
-        $gameRepository->remove($game, true);
-
-        return $this->redirectToRoute('app_game_list');
+        return $this->render('game/random_games.html.twig', [
+            'games' => $games
+        ]);
     }
 }

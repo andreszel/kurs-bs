@@ -1,10 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Index - new game{% endblock %}
-
 {% block body %}
-    <div class="container">
-        <h3>Formularz dodawania nowej gry</h3>
-        {% include 'game/_form.html.twig' %}
+    <h1>Games</h1>
+    <a href="{{ path('app_game_new') }}" class="btn btn-sm btn-primary">+ Nowa gra</a>
+    <a href="{{ path('app_category') }}" class="btn btn-sm btn-success">Game categories</a>
+    <a href="{{ path('app_game_top_list') }}" class="btn btn-sm btn-info">TOP Games</a>
+    <a href="{{ path('app_random_games') }}" class="btn btn-sm btn-info">Random Games</a>
+    <div class="games">
+        <ul>
+            {% for game in games %}
+                <li class="d-flex justify-content-between">
+                    <div>{{ loop.index }}. {{ game.name }}</div>
+                    <div>
+                        <a href="{{ path('app_game_show', {'id': game.id}) }}" class="btn btn-sm btn-success">details</a>
+                        <a href="{{ path('app_game_edit', {'id': game.id}) }}" class="btn btn-sm btn-info">edit</a>
+                        <a href="{{ path('app_game_delete', {'id': game.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

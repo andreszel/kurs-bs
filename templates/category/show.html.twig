@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game category!{% endblock %}
+
+{% block body %}
+    <h1>Category</h1>
+
+    <a href="{{ path('app_category') }}" class="btn btn-sm btn-primary">Powrót do listy</a>
+
+    <div class="category-post mt-3">
+        Nazwa kategorii: {{ category.name }}
+    </div>
+{% endblock %}
