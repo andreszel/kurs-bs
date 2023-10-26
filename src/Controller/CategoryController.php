@@ -23,8 +23,6 @@ class CategoryController extends AbstractController
     #[Route('/category/new', name: 'app_category_new')]
     public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
 

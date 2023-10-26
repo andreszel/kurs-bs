@@ -3,10 +3,12 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     role_hierarchy:
-        ROLE_ADD: ROLE_COPYWRITER
-        ROLE_EDIT: ROLE_MODERATOR
         ROLE_ADMIN: ROLE_ADMIN
-        ROLE_SUPER_ADMIN: [ ROLE_ADD. ROLE_EDIT, ROLE_ADMIN ]
+        ROLE_ADMIN_ADD: ROLE_ADMIN_ADD
+        ROLE_ADMIN_EDIT: ROLE_ADMIN_EDIT
+        ROLE_ADMIN_DELETE: ROLE_ADMIN_DELETE
+        ROLE_ADMIN_EDITOR: [ ROLE_ADMIN_ADD, ROLE_ADMIN_EDIT ]
+        ROLE_SUPER_ADMIN: [ ROLE_EDITOR, ROLE_DELETE ]
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -52,8 +54,14 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/game/new, roles: ROLE_ADMIN }
+        - { path: ^/game/new, roles: ROLE_ADMIN_ADD }
+        - { path: ^/post/new, roles: ROLE_ADMIN_ADD }
+        - { path: ^/game/edit, roles: ROLE_ADMIN_EDIT }
+        - { path: ^/post/edit, roles: ROLE_ADMIN_EDIT }
+        - { path: ^/game/delete, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/post/delete, roles: ROLE_SUPER_ADMIN }
         - { path: ^/games, roles: ROLE_USER }
+        - { path: ^/post, roles: ROLE_USER }
 
 when@test:
     security:
