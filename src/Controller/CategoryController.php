@@ -20,17 +20,11 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/show/{id}', name: 'app_category_show')]
-    public function show(Category $category): Response
-    {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
-        ]);
-    }
-
     #[Route('/category/new', name: 'app_category_new')]
-    public function create(Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
 
@@ -73,6 +67,14 @@ class CategoryController extends AbstractController
 
         return $this->render('category/edit.html.twig', [
             'form' => $form
+        ]);
+    }
+
+    #[Route('/category/show/{id}', name: 'app_category_show')]
+    public function show(Category $category): Response
+    {
+        return $this->render('category/show.html.twig', [
+            'category' => $category,
         ]);
     }
 

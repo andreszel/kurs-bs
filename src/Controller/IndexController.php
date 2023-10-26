@@ -15,7 +15,7 @@ class IndexController extends AbstractController
     public function home(): Response
     {
         $templates_dir = $this->getParameter('templates_dir');
-        dump($templates_dir);
+        dump('index.home - parameter - ' . $templates_dir);
 
         /* $this->addFlash('success', 'alert success');
         $this->addFlash('info', 'alert info'); */

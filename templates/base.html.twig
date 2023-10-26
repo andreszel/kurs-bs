@@ -27,8 +27,17 @@
                     <li><a href="{{ path('page.index') }}">Page entity</a></li>
                     <li><a href="{{ path('app_game') }}">Games</a></li>
                     <li><a href="{{ path('app_post') }}">Post</a></li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ path('app_login') }}">Login</a></li>
+                        <li><a href="{{ path('app_register') }}">Register</a></li>
+                    {% endif %}
                 </ul>
             </nav>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <span class="text-info">Zalogowany: {{ app.user.email }}</span>
+            {% endif %}
         </header>
 
         {% for label, messages in app.flashes %}
