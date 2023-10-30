@@ -8,19 +8,24 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class GameRepositoryTest extends KernelTestCase
 {
-    public function test_save_new_game_in_database(): void
+    public function test_save_new_game_to_database(): void
     {
         $kernel = self::bootKernel();
         $container = self::getContainer();
+
+        $gameName = 'Test assasin';
+        $gameDescription = 'Test description - lorem ipsum';
+        $gameScore = 7;
+        $gameReleaseDate = new \DateTime('2007-11-13');
 
         $entityManager = $container->get(EntityManagerInterface::class);
 
         $game = new Game();
 
-        $game->setName('Test assasin')
-            ->setDescription('test description')
-            ->setScore(8)
-            ->setReleaseDate(new \DateTime('2007-11-13'));
+        $game->setName($gameName)
+            ->setDescription($gameDescription)
+            ->setScore($gameScore)
+            ->setReleaseDate($gameReleaseDate);
         
         $gameRepository = $entityManager->getRepository(Game::class);
 
@@ -29,8 +34,8 @@ class GameRepositoryTest extends KernelTestCase
         $game = $gameRepository->find($game->getId());
 
         $this->assertInstanceOf(Game::class, $game);
-        $this->assertEquals('Test assasin', $game->getName());
-        $this->assertEquals('test description', $game->getDescription());
-        $this->assertEquals(8, $game->getScore());
+        $this->assertEquals($gameName, $game->getName());
+        $this->assertEquals($gameDescription, $game->getDescription());
+        $this->assertEquals($gameScore, $game->getScore());
     }
 }

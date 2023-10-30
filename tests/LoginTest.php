@@ -5,9 +5,9 @@ namespace App\Tests;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AddNewGameTest extends WebTestCase
+class LoginTest extends WebTestCase
 {
-    public function test_add_new_game_as_auth_user(): void
+    public function test_login_user(): void
     {
         $client = static::createClient();
         
@@ -24,7 +24,7 @@ class AddNewGameTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h3', 'Formularz dodawania nowej gry');
 
-        $history = $client->getHistory();
+        /* $history = $client->getHistory();
         $cookieJar = $client->getCookieJar();
         // the HttpKernel request instance
         $request = $client->getRequest();
@@ -39,6 +39,6 @@ class AddNewGameTest extends WebTestCase
         $response = $client->getInternalResponse();
 
         // the Crawler instance
-        $crawler = $client->getCrawler();
+        $crawler = $client->getCrawler(); */
     }
 }

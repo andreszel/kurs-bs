@@ -9,7 +9,7 @@ use App\Repository\GameRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AddNewGameUseFormGameTest extends WebTestCase
+class AddNewGameUseFormTest extends WebTestCase
 {
     public function test_add_new_game_use_form_game(): void
     {
@@ -19,6 +19,7 @@ class AddNewGameUseFormGameTest extends WebTestCase
         $gameName = 'Fortnite';
         $gameDescription = 'Test description xxx - fortnite';
         $gameScore = 7;
+        $gameReleaseDate = '2011-03-01';
 
         $client = static::createClient();
         $client->followRedirects();
@@ -42,7 +43,7 @@ class AddNewGameUseFormGameTest extends WebTestCase
             'game[name]' => $gameName,
             'game[description]' => $gameDescription,
             'game[score]' => $gameScore,
-            'game[releaseDate]' => '2011-03-01',
+            'game[releaseDate]' => $gameReleaseDate,
             'game[category]' => $category->getId()
         ]);
 

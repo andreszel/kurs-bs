@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginFormTest extends WebTestCase
 {
+    private $email = 'add@as.pl';
+    private $password = 'test1234';
+
     public function test_login_use_form_type_first(): void
     {
-        $email = 'add@as.pl';
-        $password = 'test1234';
-
         $client = static::createClient();
         $client->followRedirects();
         $crawler = $client->request('GET', '/');
@@ -23,31 +23,10 @@ class LoginFormTest extends WebTestCase
 
         // select the button
         $authCrawlerNode = $crawler->selectButton('Zaloguj się');
-        //$form = $authCrawlerNode->form();
-
-        /* // retrieve the Form object for the form belonging to this button
-        $form = $authCrawlerNode->form();
-
-        // set values on a form object
-        $form['email'] = $email;
-        $form['password'] = $password;
-
-        // submit the Form object
-        $client->submit($form); */
-
-        /* $client->submit($form, [
-            'email'    => $email,
-            'password' => $password,
-        ]); */
-
-        /* $client->submitForm('Sign in', [
-            'email'    => $email,
-            'password' => $password,
-        ]); */
 
         $form = $authCrawlerNode->form(array(
-            'email' => $email,
-            'password' => $password
+            'email' => $this->email,
+            'password' => $this->password
         ));
 
         $crawler = $client->submit($form);
@@ -62,9 +41,6 @@ class LoginFormTest extends WebTestCase
 
     public function test_login_use_form_type_second(): void
     {
-        $email = 'add@as.pl';
-        $password = 'test1234';
-
         $client = static::createClient();
         $client->followRedirects();
         $crawler = $client->request('GET', '/login');
@@ -72,8 +48,8 @@ class LoginFormTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Zaloguj się', [
-            'email'    => $email,
-            'password' => $password,
+            'email'    => $this->email,
+            'password' => $this->password,
         ]);
 
         $link = $crawler->selectLink('Games')->link();
@@ -86,9 +62,6 @@ class LoginFormTest extends WebTestCase
 
     public function test_login_use_form_type_threeth(): void
     {
-        $email = 'add@as.pl';
-        $password = 'test1234';
-
         $client = static::createClient();
         $client->followRedirects();
         $crawler = $client->request('GET', '/login');
@@ -103,8 +76,8 @@ class LoginFormTest extends WebTestCase
         $form = $authCrawlerNode->form();
 
         // set values on a form object
-        $form['email'] = $email;
-        $form['password'] = $password;
+        $form['email'] = $this->email;
+        $form['password'] = $this->password;
 
         // submit the Form object
         $crawler = $client->submit($form);
