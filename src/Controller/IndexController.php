@@ -15,7 +15,6 @@ class IndexController extends AbstractController
     public function home(): Response
     {
         $templates_dir = $this->getParameter('templates_dir');
-        dump('index.home - parameter - ' . $templates_dir);
 
         /* $this->addFlash('success', 'alert success');
         $this->addFlash('info', 'alert info'); */
@@ -26,7 +25,6 @@ class IndexController extends AbstractController
     #[Route('/about', name: 'index.about')]
     public function about(): Response
     {
-        dump('elo');
         return $this->render('index/about.html.twig');
     }
 

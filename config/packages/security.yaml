@@ -34,7 +34,7 @@ security:
                 lifetime: 604800
                 #path: /
                 #always_remember_me: true
-                signature_properties: ['password', 'updatedAt']
+                signature_properties: ['password']
             # by default, the feature allows 5 login attempts per minute
             # login_throttling: null
             # login attempts per minute
