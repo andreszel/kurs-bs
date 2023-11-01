@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'index.home')]
-    public function home(): Response
+    public function homepage(): Response
     {
         $templates_dir = $this->getParameter('templates_dir');
 

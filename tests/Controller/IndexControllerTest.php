@@ -1,12 +1,21 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class VisitOnAboutPageTest extends WebTestCase
+class IndexControllerTest extends WebTestCase
 {
-    public function test_visit(): void
+    public function test_homepage(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h2', 'Home Page');
+    }
+
+    public function test_about(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/');

@@ -9,7 +9,7 @@
     <div class="games">
         <ul>
             {% for game in games %}
-                <li class="d-flex justify-content-between">
+                <li class="d-flex justify-content-between game-item">
                     <div>{{ loop.index }}. {{ game.name }}</div>
                     <div>
                         <a href="{{ path('app_game_show', {'id': game.id}) }}" class="btn btn-sm btn-success">details</a>

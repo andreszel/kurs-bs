@@ -1,13 +1,25 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class LoginFormTest extends WebTestCase
+class SecurityControllerTest extends WebTestCase
 {
     private $email = 'add@as.pl';
     private $password = 'test1234';
+
+    public function test_can_see_login_form()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/login');
+
+        $response = $client->getResponse();
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(200, $response->getStatusCode());
+    }
 
     public function test_login_use_form_type_first(): void
     {
@@ -90,14 +102,38 @@ class LoginFormTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Games list');
     }
 
-    public function test_can_see_login_form()
+    public function test_simulate_logged_user(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/login');
+        
+        $userRepository = static::getContainer()->get(UserRepository::class);
 
-        $response = $client->getResponse();
+        // retrieve the test user
+        $testUser = $userRepository->findOneByEmail('add@as.pl');
+
+        // simulate $testUser being logged in
+        $client->loginUser($testUser);
+
+        $crawler = $client->request('GET', '/game/new');
 
         $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(200, $response->getStatusCode());
+        $this->assertSelectorTextContains('h3', 'Formularz dodawania nowej gry');
+
+        /* $history = $client->getHistory();
+        $cookieJar = $client->getCookieJar();
+        // the HttpKernel request instance
+        $request = $client->getRequest();
+
+        // the BrowserKit request instance
+        $request = $client->getInternalRequest();
+
+        // the HttpKernel response instance
+        $response = $client->getResponse();
+
+        // the BrowserKit response instance
+        $response = $client->getInternalResponse();
+
+        // the Crawler instance
+        $crawler = $client->getCrawler(); */
     }
 }
