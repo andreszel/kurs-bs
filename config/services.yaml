@@ -30,3 +30,12 @@ services:
             $codePrefix: 'code_'
         #bind:
         #    $codePrefix: 'codeBind_'
+    #App\EventListener\TrafficListener:
+    #    tags:
+    #        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    App\EventSubscriber\TrafficSubscriber: ~
+
+    App\Service\CodeCreatorDecorator:
+        decorates: App\Service\CodeCreator
+    App\Service\CodeGeneratorDecorator:
+        decorates: App\Service\CodeGenerator

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Message\SendKey;
 use App\Message\SendSms;
-use App\Service\CodeGenerator;
+use App\Service\CodeGeneratorDecorator;
 use App\Service\RandomGame;
 use App\Service\RandomUserId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,7 +60,7 @@ class IndexController extends AbstractController
     }
 
     #[Route('/generate-code', name: 'index.generate_code', methods: ['GET'])]
-    public function generateCode(CodeGenerator $codeGenerator): Response
+    public function generateCode(CodeGeneratorDecorator $codeGenerator): Response
     {
         $code = $codeGenerator->generate();
 
